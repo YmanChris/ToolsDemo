@@ -8,7 +8,7 @@ package com.example.yman.toolslibrary.Utils;
 
 public class StringUtils {
 
-    public boolean isEqual(String s1, String s2){
+    public static boolean isEqual(String s1, String s2){
         if(null == s1 && null == s2){
             return true;
         } else if(null == s1 || null == s2){
@@ -18,7 +18,7 @@ public class StringUtils {
         }
     }
 
-    public boolean isEquals(String[] s1, String[] s2){
+    public static boolean isEquals(String[] s1, String[] s2){
         if(null == s1 && null == s2){
             return true;
         } else if(null == s1 || null == s2){
@@ -37,7 +37,7 @@ public class StringUtils {
         }
     }
 
-    public boolean isEmpty(String s1){
+    public static boolean isEmpty(String s1){
         return (null == s1 || s1.equals(""));
     }
 

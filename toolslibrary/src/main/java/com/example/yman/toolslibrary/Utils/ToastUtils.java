@@ -63,6 +63,7 @@ public class ToastUtils {
     public void setView(View view){
         mToast.setView(view);
     }
+
     public void cancel(){
         mHandler.removeCallbacks(mToastThread);
         mToast.cancel();;
