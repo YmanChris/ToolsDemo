@@ -12,34 +12,46 @@ import java.util.List;
  */
 
 public class LogUtils {
-    public static boolean debugger = true;
 
-    public static List<String> filterList = new LinkedList<>();
+    private static LogUtils sLogUtils;
+
+    private static boolean debugger = true;
+
+    private static List<String> filterList = new LinkedList<>();
 
     public static void setDebugger(boolean debugger) {
         LogUtils.debugger = debugger;
     }
 
-    public LogUtils filter(String str){
-        filterList.add(str);
-        return this;
+    public static LogUtils filter(String str){
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        sLogUtils.filterList.add(str);
+        return sLogUtils;
     }
 
-    public LogUtils removeFilter(String str){
-        for(int i = 0 ; i < filterList.size() ; i ++){
-            if(StringUtils.isEqual(filterList.get(i), str)){
-                filterList.remove(i);
+    public static LogUtils removeFilter(String str){
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        for(int i = 0 ; i < sLogUtils.filterList.size() ; i ++){
+            if(StringUtils.isEqual(sLogUtils.filterList.get(i), str)){
+                sLogUtils.filterList.remove(i);
                 i--;
             }
         }
-        return this;
+        return sLogUtils;
     }
 
     public static void e(String tag, String msg){
-        if(debugger) {
-            if(filterList.size() != 0) {
-                for(int i = 0 ; i < filterList.size() ; i ++) {
-                    if((tag + msg).contains(filterList.get(i))) {
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        if(sLogUtils.debugger) {
+            if(sLogUtils.filterList.size() != 0) {
+                for(int i = 0 ; i < sLogUtils.filterList.size() ; i ++) {
+                    if((tag + msg).contains(sLogUtils.filterList.get(i))) {
                         Log.e(tag, msg);
                     }
                 }
@@ -52,10 +64,13 @@ public class LogUtils {
     }
 
     public static void i(String tag, String msg){
-        if(debugger) {
-            if(filterList.size() != 0) {
-                for(int i = 0 ; i < filterList.size() ; i ++) {
-                    if((tag + msg).contains(filterList.get(i))) {
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        if(sLogUtils.debugger) {
+            if(sLogUtils.filterList.size() != 0) {
+                for(int i = 0 ; i < sLogUtils.filterList.size() ; i ++) {
+                    if((tag + msg).contains(sLogUtils.filterList.get(i))) {
                         Log.i(tag, msg);
                     }
                 }
@@ -68,10 +83,13 @@ public class LogUtils {
     }
 
     public static void d(String tag, String msg){
-        if(debugger) {
-            if(filterList.size() != 0) {
-                for(int i = 0 ; i < filterList.size() ; i ++) {
-                    if((tag + msg).contains(filterList.get(i))) {
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        if(sLogUtils.debugger) {
+            if(sLogUtils.filterList.size() != 0) {
+                for(int i = 0 ; i < sLogUtils.filterList.size() ; i ++) {
+                    if((tag + msg).contains(sLogUtils.filterList.get(i))) {
                         Log.d(tag, msg);
                     }
                 }
@@ -84,8 +102,19 @@ public class LogUtils {
     }
 
     public static void w(String tag, String msg){
-        if(debugger) {
-            Log.w(tag, msg);
+        if(null == sLogUtils) {
+            sLogUtils = new LogUtils();
+        }
+        if(sLogUtils.debugger) {
+            if(sLogUtils.filterList.size() != 0) {
+                for(int i = 0 ; i < sLogUtils.filterList.size() ; i ++) {
+                    if((tag + msg).contains(sLogUtils.filterList.get(i))) {
+                        Log.w(tag, msg);
+                    }
+                }
+            } else {
+                Log.w(tag, msg);
+            }
         } else{
             return;
         }

@@ -21,10 +21,14 @@ public class MainActivity extends AppCompatActivity {
     TextView showToast;
 
     @OnClick(R.id.show_toast) void submit(){
-        ToastUtils toastUtils = new ToastUtils(this);
+        /*ToastUtils toastUtils = new ToastUtils(this);
         toastUtils.setText("this is ToastUtil");
         toastUtils.setGravity(Gravity.CENTER, 0, 0);
-        toastUtils.show(1000);
+        toastUtils.show(1000);*/
+        LogUtils.removeFilter("abc");
+        LogUtils.i("ddd","aaa");
+        LogUtils.i("dd","aaa");
+        LogUtils.i("bdd","abc");
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         LogUtils.setDebugger(true);
+        LogUtils.filter("ddd").filter("abc");
     }
 }
